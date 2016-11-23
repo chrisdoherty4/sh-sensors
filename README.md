@@ -1,7 +1,7 @@
 # README #
 
-##SMART Hub Room \ SH Sensor code base##
+###SMART Hub Room \ SH Sensor code base###
 
-### Dependencies ###
+#### Dependencies ####
 
 #### Setup Guidance ####
