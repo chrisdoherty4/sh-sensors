@@ -7,3 +7,6 @@ This code base represents all code related to sensing presence in hub rooms.
 #### Dependencies ####
 
 #### Setup Guidance ####
+
+#### License ####
+See LICENSE.md.
