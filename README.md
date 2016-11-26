@@ -5,6 +5,7 @@
 This code base represents all code related to sensing presence in hub rooms. 
 
 #### Dependencies ####
+1. RPi.GPIO (Already installed on Raspberry Pi)
 
 #### Setup Guidance ####
 
