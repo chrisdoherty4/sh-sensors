@@ -22,8 +22,9 @@ class DetectionContainer(Queue):
         self._detection.begin()
         
     def stop_detection(self):
-        print "DetectionContainer: stop detection"
-        self._detection.end()
-        self.put(self._detection)
-        self._detection = None
-        self._lock.release()
+        if self._detection != None:
+            print "DetectionContainer: stop detection"
+            self._detection.end()
+            self.put(self._detection)
+            self._detection = None
+            self._lock.release()
