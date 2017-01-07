@@ -5,7 +5,6 @@ Created on 30 Dec 2016
 '''
 
 from threading import Timer
-from time import sleep
 
 class OccupiedState():
     # Timer used to determine unoccupied
