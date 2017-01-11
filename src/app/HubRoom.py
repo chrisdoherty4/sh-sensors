@@ -13,6 +13,8 @@ class HubRoom():
     # Container for tracking the detections
     detection_manager_ = None
     
+    sensor_ = None
+    
     # The current state of the hub room: occupied/unoccupied
     state_ = None
     
@@ -33,26 +35,32 @@ class HubRoom():
         self.occupied_state_config_ = occupied_state_config
         
         # Create objects.
-        self.state_ = self.create_unoccupied_state_()
-        self.detection_manager_ = DetectionManager(MotionSensor(hub_room_config['sensing_pin']))
+        self.sensor_ = MotionSensor(hub_room_config['sensing_pin'])
+        self.detection_manager_ = DetectionManager()
+        self.sensor_.when_motion = self.detection_manager_.start_detection
+        self.sensor_.when_no_motion = self.detection_manager_.stop_detection
     
     # Begins the process of monitoring activity in the hub room
     def start_monitoring(self):
+        print "HubRoom: starting monitoring"
+        self.state_ = self.create_unoccupied_state_()
         self.state_.handle_detections(True)
     
     # Stops activity monitoring of the hub room.
     def stop_monitoring(self):
+        print "HubRoom: stopping monitoring"
         self.state_.handle_detections(False)
-        self.state_ = self.create_unoccupied_state_()
     
     # Callback triggered when the room becomes occupied
     def occupied(self):
+        print "HubRoom: changing to occupied"
         self.state_.handle_detections(False)
         self.state_ = self.create_occupied_state_()
         self.state_.handle_detections(True)
     
     # Callback triggered when ther oom becomes unoccupied.
     def unoccupied(self):
+        print "HubRoom: changing to unoccupied"
         self.state_.handle_detections(False)
         self.state_ = self.create_unoccupied_state_()
         self.state_.handle_detections(True)
@@ -65,7 +73,7 @@ class HubRoom():
     
     # Creates a new unoccupied state object.
     def create_unoccupied_state_(self):
-        state = UnoccupiedState(self.unoccupied_state_config['max_detection_interval'], self.unoccupied_state_config['required_consecutive_detections'], self.occupied)
+        state = UnoccupiedState(self.unoccupied_state_config_['max_detection_interval'], self.unoccupied_state_config_['required_consecutive_detections'], self.occupied)
         self.detection_manager_.new_detection = state.new_detection
         return state
     

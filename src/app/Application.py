@@ -15,9 +15,11 @@ class Application(object):
     # Initialises internal variables
     def __init__(self, hub_room):
         self.hub_room_ = hub_room
+        print "Application: initialised"
     
     # Main programme loop
     def run(self):
+        print "Application: running"
         self.hub_room_.start_monitoring()
         
         try:
@@ -25,4 +27,5 @@ class Application(object):
                 sleep(0.1)
         except KeyboardInterrupt:
             self.hub_room_.stop_monitoring()
+            print "Application: stopped"
         

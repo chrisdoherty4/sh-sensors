@@ -30,5 +30,5 @@ unoccupied_config = {
 # Represenst the hub room configuration
 hub_room_config = {
     # The pin the motion sensor is attached to.
-    "sensing_ping": 7
+    "sensing_pin": 7
     }

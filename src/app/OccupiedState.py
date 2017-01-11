@@ -23,17 +23,18 @@ class OccupiedState():
     def __init__(self, timeout, unoccupied_callback):
         self.timeout_ = timeout
         self.unoccupied_callback_ = unoccupied_callback
-        print "OccupiedState: created (timeout=%s)" % (timeout)
+        print "OccupiedState: initialised (timeout=%s)" % (timeout)
     
     # Fired when a new detection is available.
     def new_detection(self, detection):
         if self.handle_detections_:
-            print "OccupiedState: motion detected, resetting timer"
+            print "OccupiedState: new detection"
             
             if self.timer_ != None:
                 self.timer_.cancel()
-                
-            self.timer_ = Timer(self.timeout_, self.unoccupied_callback_)
+            
+            print "OccupiedState: resetting timeout period"
+            self.timer_ = Timer(self.timeout_, self.room_unoccupied_)
             self.timer_.start()
     
     # Stops this thread
@@ -47,3 +48,8 @@ class OccupiedState():
             self.cancel_timer()
             
         self.handle_detections_ = status
+    
+    # Debug and callback call
+    def room_unoccupied_(self):
+        print "OccupiedState: room unoccupied, changing state"
+        self.unoccupied_callback_()

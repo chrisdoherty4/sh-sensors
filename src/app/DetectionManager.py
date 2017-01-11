@@ -19,13 +19,12 @@ class DetectionManager():
     new_detection = None
     
     # Initialises internal variables.
-    def __init__(self, motion_sensor):
-        motion_sensor.when_motion = self.start_detection 
-        motion_sensor.when_no_motion = self.stop_detection 
+    def __init__(self):
+        print "DetectionManager: initialised"
     
     # Begins a new detection based on the MotionSensor object.
     def start_detection(self):
-        print "DetectionContainer: start detection"
+        print "DetectionManager: starting detection"
         self._lock.acquire()
         self._detection = Detection()
         self._detection.start()
@@ -33,7 +32,7 @@ class DetectionManager():
     # Ends a detection and passes it to the specified callback
     def stop_detection(self):
         if self._detection != None:
-            print "DetectionContainer: stop detection"
+            print "DetectionManager: stopping detection"
             self._detection.stop()
             
             if self.new_detection != None: 
