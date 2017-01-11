@@ -6,18 +6,22 @@ Created on 23 Dec 2016
 
 import time
 
+# Represents a single detection.
 class Detection():
-    # Start time of detection
+    # start_ time of detection
     start = None
     
-    # End time of detection
+    # end_ time of detection
     end = None
     
-    def begin(self):
+    # Begins a new detection
+    def start(self):
         self.start = time.time()
         
-    def end(self):
+    # Ends the detection
+    def stop(self):
         self.end = time.time()
       
+    # Calculates the detection length in seconds.
     def detection_len(self):
         return self.end - self.start

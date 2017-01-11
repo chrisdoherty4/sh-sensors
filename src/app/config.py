@@ -20,18 +20,15 @@ occupied_config = {
 unoccupied_config = {
     # The time between consecutive detections in seconds that contribute to the 
     # 'threshold' argument. We look for <= the interval between detections.
-    "detection_interval": 5, 
+    "max_detection_interval": 5, 
     
     # The number of consecutive detections with the specified interval required 
     # before we assume the room is occupied
-    "detection_threshold": 1
+    "required_consecutive_detections": 1
     }
 
-# An array of red LED pin numbers.
-red_led_pins = [25]
-
-# An array of green led pin numbers
-green_led_pins = [9]
-
-# The motion sensor pin 
-motion_sensor_pin = 7
+# Represenst the hub room configuration
+hub_room_config = {
+    # The pin the motion sensor is attached to.
+    "sensing_ping": 7
+    }

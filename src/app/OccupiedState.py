@@ -8,33 +8,42 @@ from threading import Timer
 
 class OccupiedState():
     # Timer used to determine unoccupied
-    _timer = None
+    timer_ = None
     
     # Timeout for motion to class room as unoccupied
-    _timeout = 30.0
+    timeout_ = 30.0
     
     # Callback when we're unoccupied
-    _unoccupied_callback = None
+    unoccupied_callback_ = None
     
-    # Status of thread
-    _running = True
+    # Are we, or aren't we handling detections?
+    handle_detections_ = False
     
+    # Initialises internal variables.
     def __init__(self, timeout, unoccupied_callback):
-        self._timeout = timeout
-        self._unoccupied_callback = unoccupied_callback
+        self.timeout_ = timeout
+        self.unoccupied_callback_ = unoccupied_callback
         print "OccupiedState: created (timeout=%s)" % (timeout)
     
-    def motion_detected(self):
-        print "OccupiedState: motion detected, resetting timer"
-        
-        if self._timer != None:
-            self._timer.cancel()
+    # Fired when a new detection is available.
+    def new_detection(self, detection):
+        if self.handle_detections_:
+            print "OccupiedState: motion detected, resetting timer"
             
-        self._timer = Timer(self._timeout, self._unoccupied_callback)
-        self._timer.start()
+            if self.timer_ != None:
+                self.timer_.cancel()
+                
+            self.timer_ = Timer(self.timeout_, self.unoccupied_callback_)
+            self.timer_.start()
     
     # Stops this thread
-    def stop(self):
-        print "OccupiedState: stopping"
-        self._timer.cancel()
-        self._running = False
+    def cancel_timer(self):
+        print "OccupiedState: cancelling timer"
+        self.timer_.cancel()
+    
+    # Stop or start the handling of detections.
+    def handle_detections(self, status):
+        if status == False and self.timer_ != None: 
+            self.cancel_timer()
+            
+        self.handle_detections_ = status
