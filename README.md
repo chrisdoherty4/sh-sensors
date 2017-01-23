@@ -10,6 +10,7 @@ Installed via pip (python-pip available from Debian repos).
 1. Python 2.7
 1. RPi.GPIO (Already installed on Raspberry Pi)
 1. GPIOZero
+1. Kivy
 
 
 #### Setup Guidance ####
