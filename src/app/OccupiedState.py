@@ -53,3 +53,6 @@ class OccupiedState():
     def room_unoccupied_(self):
         print "OccupiedState: room unoccupied, changing state"
         self.unoccupied_callback_()
+        
+    def __str__(self):
+        return "OccupiedState"

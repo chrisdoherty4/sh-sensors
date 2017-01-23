@@ -8,6 +8,7 @@ from DetectionManager import DetectionManager
 from UnoccupiedState import UnoccupiedState
 from OccupiedState import OccupiedState
 from gpiozero import MotionSensor
+from Display import Display
 
 class HubRoom():
     # Container for tracking the detections
@@ -27,6 +28,9 @@ class HubRoom():
     # Hub room configuration 
     hub_room_config_ = None
     
+    # A set of observer objects
+    observers_ = set([])
+    
     # Initialise the hub room into an unoccupied state.
     def __init__(self, hub_room_config, unoccupied_state_config, occupied_state_config):
         # Internal variables
@@ -39,6 +43,14 @@ class HubRoom():
         self.detection_manager_ = DetectionManager()
         self.sensor_.when_motion = self.detection_manager_.start_detection
         self.sensor_.when_no_motion = self.detection_manager_.stop_detection
+        
+        self.display = Display()
+        self.register_observer(self.display)
+        self.display.run()
+    
+    # registers a new observer with this object
+    def register_observer(self, observer):
+        self.observers_.add(observer)
     
     # Begins the process of monitoring activity in the hub room
     def start_monitoring(self):
@@ -57,6 +69,7 @@ class HubRoom():
         self.state_.handle_detections(False)
         self.state_ = self.create_occupied_state_()
         self.state_.handle_detections(True)
+        self.notify_observers()
     
     # Callback triggered when ther oom becomes unoccupied.
     def unoccupied(self):
@@ -64,6 +77,7 @@ class HubRoom():
         self.state_.handle_detections(False)
         self.state_ = self.create_unoccupied_state_()
         self.state_.handle_detections(True)
+        self.notify_observers()
         
     # Creates a new occupied state object
     def create_occupied_state_(self):
@@ -73,8 +87,13 @@ class HubRoom():
     
     # Creates a new unoccupied state object.
     def create_unoccupied_state_(self):
-        state = UnoccupiedState(self.unoccupied_state_config_['max_detection_interval'], self.unoccupied_state_config_['required_consecutive_detections'], self.occupied)
+        state = UnoccupiedState(self.unoccupied_state_config_['max_detection_interval'], 
+                                self.unoccupied_state_config_['required_consecutive_detections'], 
+                                self.occupied)
         self.detection_manager_.new_detection = state.new_detection
         return state
     
+    def notify_observers(self):
+        for observer in self.observers_:
+            observer.notify(self)
     

@@ -60,4 +60,7 @@ class UnoccupiedState():
     # Stop/start handling the detections
     def handle_detections(self, status):
         self.handle_detections_ = status 
-            
+    
+    # A textual representation of the state
+    def __str__(self):
+        return "UnoccupiedState"
