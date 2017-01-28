@@ -4,53 +4,32 @@ Created on 22 Jan 2017
 @author: chrisdoherty
 '''
 
-from kivy.config import Config
-from kivy.app import App
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.button import Button
+import tkinter as tk
 
-Config.set('graphics', 'fullscreen', 'auto')
-
-class DisplayLayout(FloatLayout):
-    
-    def __init__(self, **kwargs):
-        super(DisplayLayout, self).__init__(**kwargs)
+class Display(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
         
-        self.bind(size=self._update_button, pos=self._update_button)
+        self.unoccupied()
         
-        self.green = (0, 1, 0, 1)
-        self.red = (1, 0, 0, 1)
+        ws = self.winfo_screenwidth()
+        hs = self.winfo_screenheight()
         
-        self.button = Button(size=self.size, pos=self.pos, background_color=self.green)
-        self.button.bind(on_press=self.button_pressed)
-        self.add_widget(self.button)
+        self.geometry('%dx%d+%d+%d' % (ws, hs, 3, 3))
         
-    def _update_button(self, instance, value):
-        self.button.pos = instance.pos
-        self.button.size = instance.size
-    
-    ''' Kills the app when the button is pressed. '''
-    def button_pressed(self, obj):
-        App.get_running_app().stop()
-        
-    ''' Changes us to occupied state '''
     def occupied(self):
-        self.button.background_color = self.red
+        self.winfo_toplevel().configure(bg = '#F00')
     
-    ''' Changes us to unoccupied state '''
     def unoccupied(self):
-        self.button.background_color = self.green
-
-class Display(App):
-    def build(self):
-        self.root = root = DisplayLayout()
-        return root
+        self.winfo_toplevel().configure(bg = '#0F0')
     
     def notify(self, hub_room):
         if str(hub_room.state_) == 'UnoccupiedState':
-            self.root.unoccupied()
+            self.unoccupied()
         else:
-            self.root.occupied()
+            self.occupied()
 
 if __name__ == '__main__':
-    Display().run()
+    Display().mainloop()
+    
+    

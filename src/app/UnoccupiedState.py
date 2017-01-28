@@ -27,7 +27,7 @@ class UnoccupiedState():
     
     # Initialises internal variables.
     def __init__(self,  max_detection_interval, required_consecutive_detections, occupied_callback):        
-        print "UnoccupiedState: initialised (max_detection_interval=%s, required_consecutive_detections=%s)" % (max_detection_interval, required_consecutive_detections)
+        print("UnoccupiedState: initialised (max_detection_interval=%s, required_consecutive_detections=%s)" % (max_detection_interval, required_consecutive_detections))
         
         self.max_detection_interval_ = max_detection_interval
         self.required_consecutive_detections_ = required_consecutive_detections
@@ -37,22 +37,22 @@ class UnoccupiedState():
     # for the detection manager.
     def new_detection(self, detection):
         if self.handle_detections_: 
-            print "UnoccupiedState: new detection"
+            print("UnoccupiedState: new detection")
             current_detection = detection
             
             if self.previous_detection_ == None:
-                print "UnoccupiedState: first detection set"
+                print("UnoccupiedState: first detection set")
                 self.previous_detection_ = detection
                 return
             elif (current_detection.start - self.previous_detection_.end) > self.max_detection_interval_:
-                print "UnoccuepiedState: interval too short, resetting consecutive detection count"
+                print("UnoccuepiedState: interval too short, resetting consecutive detection count")
                 self.consecutive_detection_count_ = 0
             else:
-                print "UnoccupiedState: consecutive detection count increased"
+                print("UnoccupiedState: consecutive detection count increased")
                 self.consecutive_detection_count_+= 1
                             
             if self.consecutive_detection_count_ >= self.required_consecutive_detections_:
-                print "UnoccupiedState: activation count equal to threshold, triggering change state"
+                print("UnoccupiedState: activation count equal to threshold, triggering change state")
                 self.occupied_callback_()
                 
             self.previous_detection_ = current_detection

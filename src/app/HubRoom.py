@@ -9,6 +9,7 @@ from UnoccupiedState import UnoccupiedState
 from OccupiedState import OccupiedState
 from gpiozero import MotionSensor
 from Display import Display
+from threading import Thread
 
 class HubRoom():
     # Container for tracking the detections
@@ -46,7 +47,8 @@ class HubRoom():
         
         self.display = Display()
         self.register_observer(self.display)
-        self.display.run()
+        Thread(target = self.display.mainloop).start()
+        
     
     # registers a new observer with this object
     def register_observer(self, observer):
@@ -54,18 +56,18 @@ class HubRoom():
     
     # Begins the process of monitoring activity in the hub room
     def start_monitoring(self):
-        print "HubRoom: starting monitoring"
+        print("HubRoom: starting monitoring")
         self.state_ = self.create_unoccupied_state_()
         self.state_.handle_detections(True)
     
     # Stops activity monitoring of the hub room.
     def stop_monitoring(self):
-        print "HubRoom: stopping monitoring"
+        print("HubRoom: stopping monitoring")
         self.state_.handle_detections(False)
     
     # Callback triggered when the room becomes occupied
     def occupied(self):
-        print "HubRoom: changing to occupied"
+        print("HubRoom: changing to occupied")
         self.state_.handle_detections(False)
         self.state_ = self.create_occupied_state_()
         self.state_.handle_detections(True)
@@ -73,7 +75,7 @@ class HubRoom():
     
     # Callback triggered when ther oom becomes unoccupied.
     def unoccupied(self):
-        print "HubRoom: changing to unoccupied"
+        print("HubRoom: changing to unoccupied")
         self.state_.handle_detections(False)
         self.state_ = self.create_unoccupied_state_()
         self.state_.handle_detections(True)
