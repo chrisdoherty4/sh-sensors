@@ -102,5 +102,5 @@ class HubRoom():
             
     def debug(self, message):
         time = datetime.time(datetime.now())
-        print("[%d:%d] %s" % (time.hour, time.minute, message))
+        print("[%d:%d:%d] %s" % (time.hour, time.minute, time.second, message))
     
