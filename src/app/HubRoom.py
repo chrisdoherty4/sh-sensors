@@ -45,10 +45,10 @@ class HubRoom():
         self.sensor_.when_motion = self.detection_manager_.start_detection
         self.sensor_.when_no_motion = self.detection_manager_.stop_detection
         
-        self.display = Display()
-        self.register_observer(self.display)
-        Thread(target = self.display.mainloop).start()
-        
+#         self.display = Display()
+#         self.register_observer(self.display)
+#         Thread(target = self.display.mainloop).start()
+#         
     
     # registers a new observer with this object
     def register_observer(self, observer):
