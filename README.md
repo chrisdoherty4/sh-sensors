@@ -27,15 +27,26 @@ The general steps are as follows:
 1. Run `ifconfig` to determine your own IP address on the ethernet port. Often 10.x.x.x
 1. Connect the ethernet cable between the Pi and Laptop and run `nmap -n -sP <first 3 octets>.255/24` (E.g. `nmap -n -sP 10.42.0.255/24`). This will discover everything on the 10.42.0 network (read up on networkig if you don't understand). 
 1. `nmap` may display 2 IP addresses, you want the one that's not a broadcast address, or default gateway address (usually ends in .1)
-1. SSH into the Pi using `ssh username@ip_address`, enter the password when prompted and you're in. 
+1. SSH into the Pi using `ssh username@ip_address`, enter the password when prompted and **you're in**. 
 
 ### Running the source
-If you're connecting straight into the Pi over SSH you need to share your connection with it, and discover it's IP address. 
-Assuming all dependencies are installed and you're in the main app directory, run the following command:
+If you're connecting straight into the Pi over SSH you need to share your connection with it, and discover it's IP address (see above). 
+Assuming all dependencies are installed and you need to navigate to the source directory and run the main file. 
 
-```
-sudo python3 main.py
-```
+Note, the Display.py is currently not functioning so if the Display class is instantiated anywhere it will cause an error; this is currently done in HubRoom.py. Just make sure the lines relating to the Display class are commented out before running. 
+
+To run do the following:
+
+1. `cd ~/Workspace/T8` - shold take you to the source directory. Confirm the source is there by running `ls`
+1. `sudo python3 main.py` - we need sudo as GPIO cannot be used without elevated permissions. 
+
+### Pushing updates to the Pi
+If you've discovered the Pi's IP address or have it connected to the same network as your laptop you can send files to the Pi using the `scp` command. Google `scp` command to find out more info; or run `man scp` on a Linux box. 
+
+1. Navigate to your source code.
+1. `scp mypython.py files.py pi@<ip_address>:~/Workspace/T8`. The first few arguments specify what files to push and the final argument specifies where to push to. Note the use of `~/Workspace/T8` to ensure the files end up in the right place on the Pi.
+
+You can also run `scp * pi@<ip_address>:~/Workspace/T8` to push all files in the current directory to the Pi.
 
 ## License ####
 See LICENSE file.
