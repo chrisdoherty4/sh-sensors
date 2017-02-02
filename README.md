@@ -18,7 +18,7 @@ Install using the `sudo pip install <package name>` command.
 This section outlines steps to access the Pi and run the code.
 
 ### SSH 
-There is a good guide to finding the RPi IP address with direct ethernet connection [here](http://stackoverflow.com/questions/16040128/hook-up-raspberry-pi-via-ethernet-to-laptop-without-router). Note the guide is specific to the writers laptop. There may be differences to your own machine such as the name of the ethernet interface (his is `eth0` where as mine is `eth1wan2` or something stupid like that). I've simplified the guide below but it does assume you know what you're looking for when running the simplified commands. The guide assumes a Linux environment so you'll need to search for the Windows equivalent if you want to use that. 
+There is a good guide to finding the RPi IP address with direct ethernet connection [here](http://stackoverflow.com/questions/16040128/hook-up-raspberry-pi-via-ethernet-to-laptop-without-router). Note the guide is specific to the writers laptop. There may be differences to your own machine such as the name of the ethernet interface (his is `eth0` where as mine is `eth1wan2` or something stupid like that). I've simplified the guide below but it does assume you know what you're looking for when running the simplified commands. The stackoverflow guide, and the below, assumes a Linux environment so you'll need to search for the Windows equivalent if you want to use that. 
 
 The general steps are as follows:
 
