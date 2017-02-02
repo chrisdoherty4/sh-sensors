@@ -42,8 +42,8 @@ To run do the following:
 ### Pushing updates to the Pi
 If you've discovered the Pi's IP address or have it connected to the same network as your laptop you can send files to the Pi using the `scp` command. Google `scp` command to find out more info; or run `man scp` on a Linux box. 
 
-1. Navigate to your source code.
-1. `scp mypython.py files.py pi@<ip_address>:~/Workspace/T8`. The first few arguments specify what files to push and the final argument specifies where to push to. Note the use of `~/Workspace/T8` to ensure the files end up in the right place on the Pi.
+1. Navigate to your source code on your laptop.
+1. Run `scp mypython.py files.py pi@<ip_address>:~/Workspace/T8` specifying the files you want to send over the network to the Pi. The first few arguments specify what files to push and the final argument specifies where to push to. Note the use of `~/Workspace/T8` to ensure the files end up in the right place on the Pi.
 
 You can also run `scp * pi@<ip_address>:~/Workspace/T8` to push all files in the current directory to the Pi.
 
