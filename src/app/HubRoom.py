@@ -31,7 +31,7 @@ class HubRoom(object):
     hub_room_config_ = None
     
     # A set of observer objects
-    observers_ = set([])
+    observers_ = set([]) 
     
     # Initialise the hub room into an unoccupied state.
     def __init__(self, hub_room_config, unoccupied_state_config, occupied_state_config):        

@@ -4,7 +4,7 @@ Created on 11 Jan 2017
 @author: chrisdoherty
 '''
 
-from HubRoom import HubRoom
+from HubRoom import HubRoom 
 from Display import Display
 from time import sleep
 from config import hub_room_config, unoccupied_config, occupied_config
