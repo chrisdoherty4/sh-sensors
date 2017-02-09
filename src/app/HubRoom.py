@@ -9,10 +9,10 @@ from UnoccupiedState import UnoccupiedState
 from OccupiedState import OccupiedState
 from gpiozero import MotionSensor
 from Display import Display
-from threading import Thread
 from datetime import datetime
+from time import sleep
 
-class HubRoom():
+class HubRoom(object):
     # Container for tracking the detections
     detection_manager_ = None
     
@@ -34,22 +34,18 @@ class HubRoom():
     observers_ = set([])
     
     # Initialise the hub room into an unoccupied state.
-    def __init__(self, hub_room_config, unoccupied_state_config, occupied_state_config):
+    def __init__(self, hub_room_config, unoccupied_state_config, occupied_state_config):        
         # Internal variables
         self.hub_room_config_ = hub_room_config
         self.unoccupied_state_config_ = unoccupied_state_config
         self.occupied_state_config_ = occupied_state_config
         
         # Create objects.
-        self.sensor_ = MotionSensor(hub_room_config['sensing_pin'])
+        self.sensor_ = MotionSensor(self.hub_room_config_['sensing_pin'])
         self.detection_manager_ = DetectionManager()
         self.sensor_.when_motion = self.detection_manager_.start_detection
         self.sensor_.when_no_motion = self.detection_manager_.stop_detection
-        
-#         self.display = Display()
-#         self.register_observer(self.display)
-#         Thread(target = self.display.mainloop).start()
-#         
+              
     
     # registers a new observer with this object
     def register_observer(self, observer):

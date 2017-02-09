@@ -9,7 +9,7 @@ Created on 2 Jan 2017
 # Real values are dependent on the environment and desired sensitivity
 
 # Set development mode values
-DEV_MODE = True
+DEV_MODE = False
 
 if not DEV_MODE:
     # Occupied state configuration
