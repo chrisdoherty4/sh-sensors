@@ -4,7 +4,7 @@ Created on 2 Jan 2017
 @author: chrisdoherty
 '''
 
-from Application import Appli cation
+from Application import Application
 from threading import Thread
 from time import sleep
 
