@@ -28,16 +28,14 @@ class DetectionManager():
         self._lock.acquire()
         self._detection = Detection()
         self._detection.start()
+        self._detection.stop()
+        
+        if self.new_detection != None:
+            self.new_detection(self._detection)
+	
+        self._detection = None
+        self._lock.release()
     
     # Ends a detection and passes it to the specified callback
     def stop_detection(self):
-        if self._detection != None:
-            print("DetectionManager: stopping detection")
-            self._detection.stop()
-            
-            if self.new_detection != None: 
-                self.new_detection(self._detection)
-            
-            self._detection = None
-            self._lock.release()
-            
+        pass 
