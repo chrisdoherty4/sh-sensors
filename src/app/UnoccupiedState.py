@@ -41,16 +41,17 @@ class UnoccupiedState():
             self.debug("UnoccupiedState: new detection")
             current_detection = detection
             
-            if self.previous_detection_ == None:
-                self.debug("UnoccupiedState: first detection set")
-                self.previous_detection_ = detection
-                return
-            elif (current_detection.start - self.previous_detection_.end) > self.max_detection_interval_:
-                self.debug("UnoccuepiedState: interval too short, resetting consecutive detection count")
-                self.consecutive_detection_count_ = 0
-            else:
-                self.debug("UnoccupiedState: consecutive detection count increased")
-                self.consecutive_detection_count_+= 1
+            if self.required_consecutive_detections_ > 0:  
+                if self.previous_detection_ == None:
+                    self.debug("UnoccupiedState: first detection set")
+                    self.previous_detection_ = detection
+                    return
+                elif (current_detection.start - self.previous_detection_.end) > self.max_detection_interval_:
+                    self.debug("UnoccuepiedState: interval too short, resetting consecutive detection count")
+                    self.consecutive_detection_count_ = 0
+                else:
+                    self.debug("UnoccupiedState: consecutive detection count increased")
+                    self.consecutive_detection_count_+= 1
                             
             if self.consecutive_detection_count_ >= self.required_consecutive_detections_:
                 self.debug("UnoccupiedState: activation count equal to threshold, triggering change state")
