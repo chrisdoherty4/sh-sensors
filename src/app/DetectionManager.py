@@ -24,7 +24,7 @@ class DetectionManager():
     
     # Begins a new detection based on the MotionSensor object.
     def start_detection(self):
-        print("DetectionManager: starting detection")
+        print("DetectionManager: start detection")
         self._lock.acquire()
         self._detection = Detection()
         self._detection.start()
@@ -35,7 +35,8 @@ class DetectionManager():
 	
         self._detection = None
         self._lock.release()
+        print("DetectionManager: start deteciton function finished")
     
     # Ends a detection and passes it to the specified callback
     def stop_detection(self):
-        pass 
+        print("DetectionManager: detection ended")

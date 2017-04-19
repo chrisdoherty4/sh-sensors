@@ -16,7 +16,7 @@ if not DEV_MODE:
     occupied_config = {
         # Time to wait for no detections thereby assuming the room is now unoccupied
         # Seconds
-        "timeout": 60*3
+        "timeout": 30
         }
     
     # Unoccupied state configuration
@@ -27,7 +27,7 @@ if not DEV_MODE:
         
         # The number of consecutive detections with the specified interval required 
         # before we assume the room is occupied
-        "required_consecutive_detections": 3
+        "required_consecutive_detections": 1
         }
     
     # Represenst the hub room configuration

@@ -25,6 +25,8 @@ class OccupiedState():
         self.timeout_ = timeout
         self.unoccupied_callback_ = unoccupied_callback
         self.debug("OccupiedState: initialised (timeout=%s)" % (timeout))
+        self.timer_ = Timer(self.timeout_, self.room_unoccupied_);
+        self.timer_.start();
     
     # Fired when a new detection is available.
     def new_detection(self, detection):
