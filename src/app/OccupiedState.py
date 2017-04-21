@@ -25,20 +25,16 @@ class OccupiedState():
         self.timeout_ = timeout
         self.unoccupied_callback_ = unoccupied_callback
         self.debug("OccupiedState: initialised (timeout=%s)" % (timeout))
-        self.timer_ = Timer(self.timeout_, self.room_unoccupied_);
-        self.timer_.start();
+        
+        self.debug("OccupiedState: starting timer")
+        self.refresh_timer_()
     
     # Fired when a new detection is available.
     def new_detection(self, detection):
         if self.handle_detections_:
-            self.debug("OccupiedState: new detection")
-            
-            if self.timer_ != None:
-                self.timer_.cancel()
-            
+            self.debug("OccupiedState: new detection")            
             self.debug("OccupiedState: resetting timeout period")
-            self.timer_ = Timer(self.timeout_, self.room_unoccupied_)
-            self.timer_.start()
+            self.refresh_timer_()
     
     # Stops this thread
     def cancel_timer(self):
@@ -60,6 +56,14 @@ class OccupiedState():
     def debug(self, message):
         time = datetime.time(datetime.now())
         print("[%d:%d:%d] %s" % (time.hour, time.minute, time.second, message))
+    
+    # Refresh timer regardless of whether it has an existing timer or not.    
+    def refresh_timer_(self):
+        if self.timer_ != None:
+            self.timer_.cancel()
+            
+        self.timer_ = Timer(self.timeout_, self.room_unoccupied_)
+        self.timer_.start()
         
     def __str__(self):
         return "OccupiedState"
