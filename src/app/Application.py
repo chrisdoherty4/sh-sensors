@@ -7,7 +7,11 @@ Created on 11 Jan 2017
 from HubRoom import HubRoom 
 from Display import Display
 from time import sleep
-from config import hub_room_config, unoccupied_config, occupied_config
+
+if True:
+    from config import hub_room_config, unoccupied_config, occupied_config
+else:
+    from dev import hub_room_config, unoccupied_config, occupied_config
 
 # Represents the application as a single object.
 class Application(object):
